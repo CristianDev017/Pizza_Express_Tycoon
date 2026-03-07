@@ -1,4 +1,3 @@
-
 package service;
 
 import database.Conexion;
@@ -11,11 +10,12 @@ import java.util.List;
 
 public class RankingService {
 
-    // Ranking de jugadores de una sucursal específica
     public List<Object[]> rankingSucursal(int idSucursal) {
         List<Object[]> lista = new ArrayList<>();
         String sql = """
-            SELECT u.nombre, MAX(p.puntaje) AS mejor_puntaje, MAX(p.nivel_alcanzado) AS nivel_max, COUNT(p.id_partida) AS partidas
+            SELECT u.nombre, COUNT(p.id_partida) AS partidas,
+                   MAX(p.puntaje) AS mejor_puntaje,
+                   COALESCE(AVG(p.puntaje), 0) AS promedio
             FROM partida p
             INNER JOIN usuario u ON p.id_usuario = u.id_usuario
             WHERE p.id_sucursal = ? AND p.estado = 'TERMINADA'
@@ -31,9 +31,9 @@ public class RankingService {
                 lista.add(new Object[]{
                     posicion++,
                     rs.getString("nombre"),
+                    rs.getInt("partidas"),
                     rs.getInt("mejor_puntaje"),
-                    rs.getInt("nivel_max"),
-                    rs.getInt("partidas")
+                    (int) rs.getDouble("promedio")
                 });
             }
         } catch (Exception e) {
@@ -42,11 +42,12 @@ public class RankingService {
         return lista;
     }
 
-    // Ranking global de todos los jugadores
     public List<Object[]> rankingGlobal() {
         List<Object[]> lista = new ArrayList<>();
         String sql = """
-            SELECT u.nombre, s.nombre AS sucursal, MAX(p.puntaje) AS mejor_puntaje, MAX(p.nivel_alcanzado) AS nivel_max, COUNT(p.id_partida) AS partidas
+            SELECT u.nombre, s.nombre AS sucursal, COUNT(p.id_partida) AS partidas,
+                   MAX(p.puntaje) AS mejor_puntaje,
+                   COALESCE(AVG(p.puntaje), 0) AS promedio
             FROM partida p
             INNER JOIN usuario u ON p.id_usuario = u.id_usuario
             INNER JOIN sucursal s ON p.id_sucursal = s.id_sucursal
@@ -63,9 +64,9 @@ public class RankingService {
                     posicion++,
                     rs.getString("nombre"),
                     rs.getString("sucursal"),
+                    rs.getInt("partidas"),
                     rs.getInt("mejor_puntaje"),
-                    rs.getInt("nivel_max"),
-                    rs.getInt("partidas")
+                    (int) rs.getDouble("promedio")
                 });
             }
         } catch (Exception e) {

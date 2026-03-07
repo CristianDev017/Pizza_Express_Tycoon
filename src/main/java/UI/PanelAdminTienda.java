@@ -40,8 +40,7 @@ public class PanelAdminTienda extends JFrame {
         btnProductos.addActionListener(e -> new GestionProductosFrame(idSucursal).setVisible(true));
 
         JButton btnEstadisticas = crearBoton("Estadísticas");
-        btnEstadisticas.addActionListener(e ->
-            JOptionPane.showMessageDialog(this, "Módulo en desarrollo"));
+        btnEstadisticas.addActionListener(e -> new EstadisticasFrame(idSucursal, nombreSucursal).setVisible(true));             
 
         JButton btnRanking = crearBoton("Ranking Jugadores");
         btnRanking.addActionListener(e -> new RankingFrame(idSucursal, false).setVisible(true));
