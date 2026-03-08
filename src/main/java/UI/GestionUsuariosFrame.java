@@ -74,7 +74,6 @@ public class GestionUsuariosFrame extends JFrame {
 
         UsuarioService service = new UsuarioService();
 
-        // Carga roles desde la base de datos
         List<Object[]> roles = service.listarRoles();
         if (roles.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay roles disponibles");
@@ -91,7 +90,6 @@ public class GestionUsuariosFrame extends JFrame {
         if (rolElegido == null) return;
         int idRol = Integer.parseInt(rolElegido.split(" - ")[0].trim());
 
-        // Carga sucursales desde la base de datos
         List<Object[]> sucursales = service.listarSucursales();
         if (sucursales.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay sucursales activas");
@@ -134,7 +132,24 @@ public class GestionUsuariosFrame extends JFrame {
         if (nuevaPassword == null || nuevaPassword.trim().isEmpty()) return;
 
         UsuarioService service = new UsuarioService();
-        boolean exito = service.actualizarUsuario(id, nuevoUsername, nuevaPassword);
+
+        List<Object[]> sucursales = service.listarSucursales();
+        if (sucursales.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay sucursales activas");
+            return;
+        }
+        String[] nombresSucursales = sucursales.stream()
+            .map(s -> s[0] + " - " + s[1])
+            .toArray(String[]::new);
+
+        String sucursalElegida = (String) JOptionPane.showInputDialog(
+            this, "Seleccione la nueva sucursal:", "Sucursal",
+            JOptionPane.QUESTION_MESSAGE, null, nombresSucursales, nombresSucursales[0]
+        );
+        if (sucursalElegida == null) return;
+        int idSucursal = Integer.parseInt(sucursalElegida.split(" - ")[0].trim());
+
+        boolean exito = service.actualizarUsuario(id, nuevoUsername, nuevaPassword, idSucursal);
         if (exito) {
             JOptionPane.showMessageDialog(this, "Usuario actualizado correctamente");
             cargarUsuarios();

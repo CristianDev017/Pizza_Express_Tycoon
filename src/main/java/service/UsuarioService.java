@@ -147,13 +147,14 @@ public class UsuarioService {
         return false;
     }
 
-    public boolean actualizarUsuario(int id, String username, String password) {
-        String sql = "UPDATE usuario SET username = ?, password = ? WHERE id_usuario = ?";
+    public boolean actualizarUsuario(int id, String username, String password, int idSucursal) {
+        String sql = "UPDATE usuario SET username = ?, password = ?, id_sucursal = ? WHERE id_usuario = ?";
         try (Connection con = Conexion.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, username);
             ps.setString(2, password);
-            ps.setInt(3, id);
+            ps.setInt(3, idSucursal);
+            ps.setInt(4, id);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error actualizando usuario: " + e.getMessage());
