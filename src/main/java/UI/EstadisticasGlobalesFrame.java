@@ -1,3 +1,4 @@
+
 package UI;
 
 import service.EstadisticasService;
@@ -6,17 +7,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class EstadisticasFrame extends JFrame {
+public class EstadisticasGlobalesFrame extends JFrame {
 
-    public EstadisticasFrame(int idSucursal, String nombreSucursal) {
-        setTitle("Estadísticas - " + nombreSucursal);
-        setSize(500, 420);
+    public EstadisticasGlobalesFrame() {
+        setTitle("Estadísticas Globales");
+        setSize(500, 470);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
         getContentPane().setBackground(new Color(28, 28, 28));
 
-        JLabel lblTitulo = new JLabel("Estadísticas de " + nombreSucursal, SwingConstants.CENTER);
+        JLabel lblTitulo = new JLabel("Estadísticas Globales", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 20));
         lblTitulo.setForeground(new Color(220, 80, 20));
         lblTitulo.setBorder(new EmptyBorder(20, 0, 15, 0));
@@ -24,9 +25,9 @@ public class EstadisticasFrame extends JFrame {
         add(lblTitulo, BorderLayout.NORTH);
 
         EstadisticasService service = new EstadisticasService();
-        Object[] datos = service.estadisticasSucursal(idSucursal);
+        Object[] datos = service.estadisticasGlobales();
 
-        JPanel panelDatos = new JPanel(new GridLayout(5, 1, 0, 12));
+        JPanel panelDatos = new JPanel(new GridLayout(6, 1, 0, 12));
         panelDatos.setBackground(new Color(28, 28, 28));
         panelDatos.setBorder(new EmptyBorder(10, 40, 30, 40));
 
@@ -35,6 +36,7 @@ public class EstadisticasFrame extends JFrame {
         panelDatos.add(crearTarjeta("Mejor puntaje", String.valueOf(datos[2])));
         panelDatos.add(crearTarjeta("Nivel máximo alcanzado", String.valueOf(datos[3])));
         panelDatos.add(crearTarjeta("Jugador más activo", String.valueOf(datos[4])));
+        panelDatos.add(crearTarjeta("Sucursal más activa", String.valueOf(datos[5])));
 
         add(panelDatos, BorderLayout.CENTER);
     }

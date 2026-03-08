@@ -1,4 +1,3 @@
-
 package UI;
 
 import service.RankingService;
@@ -25,14 +24,11 @@ public class RankingFrame extends JFrame {
         panelTitulo.setBackground(new Color(28, 28, 28));
         panelTitulo.setBorder(new EmptyBorder(20, 25, 5, 25));
 
-        JLabel lblTrofeo = new JLabel("🏆");
-        lblTrofeo.setFont(new Font("SansSerif", Font.PLAIN, 22));
-
+        
         JLabel lblTitulo = new JLabel(titulo);
         lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 20));
         lblTitulo.setForeground(Color.WHITE);
 
-        panelTitulo.add(lblTrofeo);
         panelTitulo.add(lblTitulo);
         add(panelTitulo, BorderLayout.NORTH);
 

@@ -46,8 +46,7 @@ public class PanelAdminTienda extends JFrame {
         btnRanking.addActionListener(e -> new RankingFrame(idSucursal, false).setVisible(true));
 
         JButton btnReportes = crearBoton("Exportar Reportes");
-        btnReportes.addActionListener(e ->
-            JOptionPane.showMessageDialog(this, "Módulo en desarrollo"));
+        btnReportes.addActionListener(e -> new Reporteframe(idSucursal, nombreSucursal).setVisible(true));
 
         panelBotones.add(btnProductos);
         panelBotones.add(btnEstadisticas);

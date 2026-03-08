@@ -9,7 +9,7 @@ public class PanelAdmin extends JFrame {
 
     public PanelAdmin() {
         setTitle("Panel Administrador - Pizza Express Tycoon");
-        setSize(750, 450);
+        setSize(900, 450);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -25,7 +25,7 @@ public class PanelAdmin extends JFrame {
         titulo.setBorder(new EmptyBorder(25, 0, 15, 0));
         mainPanel.add(titulo, BorderLayout.NORTH);
 
-        JPanel panelBotones = new JPanel(new GridLayout(2, 2, 15, 15));
+        JPanel panelBotones = new JPanel(new GridLayout(2, 3, 15, 15));
         panelBotones.setBackground(new Color(240, 240, 240));
         panelBotones.setBorder(new EmptyBorder(20, 50, 30, 50));
 
@@ -41,10 +41,18 @@ public class PanelAdmin extends JFrame {
         JButton btnRanking = crearBoton("Ranking Global");
         btnRanking.addActionListener(e -> new RankingFrame(0, true).setVisible(true));
 
+        JButton btnEstadisticas = crearBoton("Estadísticas Globales");
+        btnEstadisticas.addActionListener(e -> new EstadisticasGlobalesFrame().setVisible(true));
+
+        JButton btnReportes = crearBoton("Ver Reportes");
+        btnReportes.addActionListener(e -> new ReporteGlobalFrame().setVisible(true));
+
         panelBotones.add(btnUsuarios);
         panelBotones.add(btnSucursales);
         panelBotones.add(btnNiveles);
         panelBotones.add(btnRanking);
+        panelBotones.add(btnEstadisticas);
+        panelBotones.add(btnReportes);
 
         mainPanel.add(panelBotones, BorderLayout.CENTER);
     }
