@@ -55,7 +55,7 @@ public GestionSucursalesFrame() {
 }
     private void cargarSucursales() {
 
-    modelo.setRowCount(0); // limpia tabla
+    modelo.setRowCount(0); 
 
     String sql = "SELECT * FROM sucursal";
 
@@ -124,7 +124,7 @@ public GestionSucursalesFrame() {
     String nuevaDireccion = JOptionPane.showInputDialog(this, "Editar direccion:", direccionActual);
 
     if (nuevoNombre == null || nuevaDireccion == null) {
-        return; // si cancela
+        return; 
     }
 
     String sql = "UPDATE sucursal SET nombre = ?, direccion = ? WHERE id_sucursal = ?";

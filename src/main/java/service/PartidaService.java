@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PartidaService {
 
-    // Crea una nueva partida y devuelve su id
+
     public int crearPartida(int idUsuario, int idSucursal) {
         String sql = "INSERT INTO partida (id_usuario, id_sucursal, puntaje, nivel_alcanzado, estado) VALUES (?, ?, 0, 1, 'EN_CURSO')";
         try (Connection con = Conexion.getConnection();
@@ -28,7 +28,7 @@ public class PartidaService {
         return -1;
     }
 
-    // Actualiza puntaje y nivel de la partida
+
     public void actualizarPartida(int idPartida, int puntaje, int nivel) {
         String sql = "UPDATE partida SET puntaje = ?, nivel_alcanzado = ? WHERE id_partida = ?";
         try (Connection con = Conexion.getConnection();
@@ -42,7 +42,7 @@ public class PartidaService {
         }
     }
 
-    // Termina la partida
+
     public void terminarPartida(int idPartida, int puntajeFinal, int nivelFinal) {
         String sql = "UPDATE partida SET estado = 'TERMINADA', puntaje = ?, nivel_alcanzado = ? WHERE id_partida = ?";
         try (Connection con = Conexion.getConnection();
@@ -56,7 +56,7 @@ public class PartidaService {
         }
     }
 
-    // Obtiene el tiempo base del nivel actual
+
     public int obtenerTiempoNivel(int numeroNivel) {
         String sql = "SELECT tiempo_base_segundos FROM nivel WHERE numero_nivel = ?";
         try (Connection con = Conexion.getConnection();
@@ -72,7 +72,7 @@ public class PartidaService {
         return 60;
     }
 
-    // Obtiene pedidos para subir de nivel
+
     public int obtenerPedidosParaSubir(int numeroNivel) {
         String sql = "SELECT pedidos_para_subir FROM nivel WHERE numero_nivel = ?";
         try (Connection con = Conexion.getConnection();
@@ -88,7 +88,7 @@ public class PartidaService {
         return 5;
     }
 
-    // Crea un nuevo pedido y devuelve su id
+
     public int crearPedido(int idPartida, int idUsuario, int tiempoLimite) {
         String sql = "INSERT INTO pedido (id_partida, id_usuario, tiempo_limite, estado) VALUES (?, ?, ?, 'RECIBIDA')";
         try (Connection con = Conexion.getConnection();
@@ -107,7 +107,7 @@ public class PartidaService {
         return -1;
     }
 
-    // Avanza el estado del pedido al siguiente
+
     public void avanzarEstadoPedido(int idPedido, String nuevoEstado) {
         String sql = "UPDATE pedido SET estado = ? WHERE id_pedido = ?";
         try (Connection con = Conexion.getConnection();
@@ -121,7 +121,7 @@ public class PartidaService {
         }
     }
 
-    // Registra el cambio de estado en el historial
+
     private void registrarHistorial(int idPedido, String estado) {
         String sql = "INSERT INTO historial_estado (id_pedido, estado) VALUES (?, ?)";
         try (Connection con = Conexion.getConnection();
@@ -134,7 +134,7 @@ public class PartidaService {
         }
     }
 
-    // Obtiene productos activos de la sucursal para generar pedidos
+
     public List<Object[]> obtenerProductosActivos(int idSucursal) {
         List<Object[]> lista = new ArrayList<>();
         String sql = "SELECT id_producto, nombre FROM producto WHERE id_sucursal = ? AND estado = true";
@@ -154,7 +154,7 @@ public class PartidaService {
         return lista;
     }
 
-    // Agrega un producto al detalle del pedido
+
     public void agregarDetallePedido(int idPedido, int idProducto, int cantidad) {
         String sql = "INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad) VALUES (?, ?, ?)";
         try (Connection con = Conexion.getConnection();

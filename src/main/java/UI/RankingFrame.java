@@ -53,14 +53,14 @@ public class RankingFrame extends JFrame {
         tabla.setSelectionBackground(new Color(220, 80, 20, 80));
         tabla.setSelectionForeground(Color.WHITE);
 
-        // Header
+
         tabla.getTableHeader().setBackground(new Color(20, 20, 20));
         tabla.getTableHeader().setForeground(new Color(160, 160, 160));
         tabla.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 12));
         tabla.getTableHeader().setPreferredSize(new Dimension(0, 36));
         tabla.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(220, 80, 20)));
 
-        // Centrar columna posición y resaltarla
+
         DefaultTableCellRenderer renderPosicion = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable t, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
