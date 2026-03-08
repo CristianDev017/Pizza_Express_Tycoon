@@ -18,6 +18,8 @@ public class PantallaJuego extends JFrame {
     private int puntaje = 0;
     private int nivel = 1;
     private int pedidosCompletados = 0;
+    private int pedidosCancelados = 0;
+    private int pedidosNoEntregados = 0;
     private static final int MAX_PEDIDOS_ACTIVOS = 5;
 
     private PartidaService partidaService = new PartidaService();
@@ -47,7 +49,6 @@ public class PantallaJuego extends JFrame {
     }
 
     private void construirUI() {
-        // Barra superior
         JPanel panelInfo = new JPanel(new BorderLayout());
         panelInfo.setBackground(new Color(20, 20, 20));
         panelInfo.setBorder(new EmptyBorder(12, 20, 12, 20));
@@ -89,7 +90,6 @@ public class PantallaJuego extends JFrame {
         panelInfo.add(btnTerminar, BorderLayout.EAST);
         add(panelInfo, BorderLayout.NORTH);
 
-        // Área de pedidos
         panelPedidos = new JPanel(new FlowLayout(FlowLayout.LEFT, 14, 14));
         panelPedidos.setBackground(new Color(35, 35, 35));
 
@@ -100,7 +100,6 @@ public class PantallaJuego extends JFrame {
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(scroll, BorderLayout.CENTER);
 
-        // Barra inferior con instrucciones
         JLabel lblInstrucciones = new JLabel("  Presiona Avanzar para preparar cada pedido. Entrega antes de que el tiempo expire.", SwingConstants.LEFT);
         lblInstrucciones.setFont(new Font("SansSerif", Font.PLAIN, 11));
         lblInstrucciones.setForeground(new Color(130, 130, 130));
@@ -153,6 +152,7 @@ public class PantallaJuego extends JFrame {
 
     public void pedidoCancelado(PedidoPanel panel) {
         puntaje -= 30;
+        pedidosCancelados++;
         eliminarPedido(panel);
         actualizarUI();
         partidaService.actualizarPartida(idPartida, puntaje, nivel);
@@ -160,6 +160,7 @@ public class PantallaJuego extends JFrame {
 
     public void pedidoNoEntregado(PedidoPanel panel) {
         puntaje -= 50;
+        pedidosNoEntregados++;
         eliminarPedido(panel);
         actualizarUI();
         partidaService.actualizarPartida(idPartida, puntaje, nivel);
@@ -198,8 +199,7 @@ public class PantallaJuego extends JFrame {
         }
 
         partidaService.terminarPartida(idPartida, puntaje, nivel);
-        JOptionPane.showMessageDialog(this, "Partida terminada.\nPuntaje final: " + puntaje + "\nNivel alcanzado: " + nivel);
         this.dispose();
-        new LoginFrame().setVisible(true);
+        new PantallaFinPartida(puntaje, nivel, pedidosCompletados, pedidosCancelados, pedidosNoEntregados, idUsuario, idSucursal, nombreUsuario).setVisible(true);
     }
 }
