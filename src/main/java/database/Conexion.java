@@ -10,7 +10,7 @@ public class Conexion {
     private static final String URL = "jdbc:mysql://localhost:3306/pizza_express_tycoon_db";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "F8BE464369!ch";
-
+    //JDBC
     public static Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
