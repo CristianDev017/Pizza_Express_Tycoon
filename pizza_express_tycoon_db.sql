@@ -1,6 +1,10 @@
+-- Base de datos para el proyecto Pizza Express Tycoon
+-- Intro Programacion 2 - USAC 2026
+
 CREATE DATABASE IF NOT EXISTS pizza_express_tycoon_db;
 USE pizza_express_tycoon_db;
 
+-- roles que puede tener un usuario en el sistema
 CREATE TABLE rol (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
@@ -13,6 +17,7 @@ CREATE TABLE sucursal (
     estado BOOLEAN DEFAULT TRUE
 );
 
+-- usuarios del sistema, cada uno tiene un rol y pertenece a una sucursal
 CREATE TABLE usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -34,6 +39,7 @@ CREATE TABLE producto (
     FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal)
 );
 
+-- configuracion de cada nivel, el tiempo y cuantos pedidos hay que completar para subir
 CREATE TABLE nivel (
     id_nivel INT AUTO_INCREMENT PRIMARY KEY,
     numero_nivel INT NOT NULL,
@@ -53,6 +59,7 @@ CREATE TABLE partida (
     FOREIGN KEY (id_sucursal) REFERENCES sucursal(id_sucursal)
 );
 
+-- cada pedido pertenece a una partida y tiene su propio tiempo limite y estado
 CREATE TABLE pedido (
     id_pedido INT AUTO_INCREMENT PRIMARY KEY,
     id_partida INT NOT NULL,
@@ -73,6 +80,7 @@ CREATE TABLE detalle_pedido (
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
 
+-- guarda cada cambio de estado que tuvo un pedido durante la partida
 CREATE TABLE historial_estado (
     id_historial INT AUTO_INCREMENT PRIMARY KEY,
     id_pedido INT NOT NULL,
@@ -82,10 +90,12 @@ CREATE TABLE historial_estado (
     FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
 );
 
+-- datos iniciales
 INSERT INTO rol (nombre) VALUES ('Super Admin'), ('Administrador'), ('Jugador');
 
 INSERT INTO sucursal (nombre, direccion, estado) VALUES ('Sucursal Zona 1', 'Central', TRUE);
 
+-- usuario admin por defecto, credenciales: admin / 1234
 INSERT INTO usuario (nombre, username, password, id_rol, id_sucursal)
 VALUES ('Super Admin', 'admin', '1234', 1, 1);
 
