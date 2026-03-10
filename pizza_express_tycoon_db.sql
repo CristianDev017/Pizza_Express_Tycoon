@@ -1,5 +1,4 @@
 -- Base de datos para el proyecto Pizza Express Tycoon
--- Intro Programacion 2 - USAC 2026
 
 CREATE DATABASE IF NOT EXISTS pizza_express_tycoon_db;
 USE pizza_express_tycoon_db;
